@@ -218,6 +218,14 @@ Balance: respect dependencies, avoid parallelizing what must be sequential, and 
 - If the Background Job Board lists \`fix-1 / ses_abc / fixer\`, call task with \`subagent_type: "fixer"\` and \`task_id: "fix-1"\` or \`task_id: "ses_abc"\`.
 - Do not leave \`task_id\` empty when intending to reuse; omitted or empty \`task_id\` creates a new specialist session.
 
+## 5. Execute
+1. Dispatch independent specialists as background tasks when safe.
+2. Record task IDs, state, and advisory ownership/dependency labels.
+3. Continue only non-overlapping coordination while jobs run.
+4. Wait for hook-driven completion before consuming outputs or starting dependent work.
+5. Reconcile terminal results, resolve conflicts, and inspect partial writer state after cancellations.
+6. Dispatch follow-up jobs if needed.
+
 ### Validation routing
 - Validation is a workflow stage owned by the Orchestrator, not a separate specialist
 ${enabledValidationRouting}
