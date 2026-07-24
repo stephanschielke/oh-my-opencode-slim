@@ -20,14 +20,17 @@ export function createBuiltinMcps(
   disabledMcps: readonly string[] = [],
   websearchConfig?: WebsearchConfig,
 ): Record<string, McpConfig> {
+  // Never trust the declared type of user-config-derived values at
+  // runtime; fall back to "nothing disabled" instead of throwing.
+  const safeDisabledMcps = Array.isArray(disabledMcps) ? disabledMcps : [];
   const mcps = Object.fromEntries(
     Object.entries(allBuiltinMcps).filter(
-      ([name]) => !disabledMcps.includes(name),
+      ([name]) => !safeDisabledMcps.includes(name),
     ),
   );
 
   // Override websearch with user-configured provider (default: Exa)
-  if (!disabledMcps.includes('websearch')) {
+  if (!safeDisabledMcps.includes('websearch')) {
     mcps.websearch = createWebsearchConfig(websearchConfig);
   }
 
