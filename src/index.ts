@@ -291,7 +291,7 @@ const OhMyOpenCodeLite: Plugin = async (ctx) => {
       startAvailabilityCheck(multiplexerConfig);
     }
 
-    mcps = createBuiltinMcps(config.disabled_mcps, config.websearch);
+    mcps = createBuiltinMcps(config.disabled_mcps);
     acpRunTools =
       Object.keys(config.acpAgents ?? {}).length > 0
         ? { acp_run: createAcpRunTool(config.acpAgents) }
